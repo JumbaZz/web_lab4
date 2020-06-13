@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post index{% endblock %}
+
+{% block body %}
+    <style>
+        h2{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            padding: 20px;
+            background-color: #00b3ff;
+            border-radius: 30px;
+            color: white;
+        }
+        .create_post{
+            text-decoration: none;
+            outline: none;
+            border: 3px solid chartreuse;
+            font-size: 25px;
+            padding: 5px;
+            position: relative;
+            top: 30px;
+            transition: 0.5s;
+            color: #00b3ff;
+        }
+
+        .create_post:hover{
+            border: 3px solid #00b3ff;
+            color: chartreuse;
+        }
+        .posts_div{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .post_div{
+            position: relative;
+            top: 40px;
+            border: 3px solid chartreuse;
+            padding: 5px;
+            width: 300px;
+            margin: 10px;
+        }
+        .btn-success{
+            text-decoration: none;
+            outline: none;
+            border: 3px solid chartreuse;
+            font-size: 15px;
+            padding: 5px;
+            transition: 0.5s;
+            color: #00b3ff;
+            background-color: white;
+        }
+        .btn-success:hover{
+            border: 3px solid #00b3ff;
+            color: chartreuse;
+        }
+
+        .in_post_div{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+        .title{
+            font-size: 20px;
+            font-weight: 600;
+            color: #00b3ff;
+            border-bottom: 2px solid chartreuse;
+        }
+        .desc{
+            font-size: 17px;
+            font-weight: 600;
+            color: dodgerblue;
+        }
+        .numv,.date{
+            font-size: 15px;
+            font-weight: 600;
+            color: dodgerblue;
+        }
+
+    </style>
+
+    {% if app.user %}
+    <a href="{{ path('post_new') }}" class="create_post">Создать</a>
+{% endif %}
+    {% if posts %}
+<div class="posts_div">
+        {% for post in posts %}
+            <div class="post_div">
+<p class="title">{{ post.Title }}</p>
+
+                <p class="desc">{{ post.Description }}</p>
+                <div style="display: flex;flex-direction: row;align-items: center;justify-content: space-between">
+            <p class="numv">Количество просмотров</p> <p style="font-size: 15px;font-weight: 600;color: green;">{{ post.NumOfViews }}</p></div>
+                <div class="in_post_div">
+                {% if app.user %}
+                    <a href="{{ path('post_show', {'id': post.id}) }}"><button class="btn-success">Посмотреть</button></a>
+                {% endif %}
+                <p class="date">{{ post.Date ? post.Date|date('d.m.Y,H:i') : '' }}</p>
+                </div>
+            </div>
+        {% endfor %}
+</div>
+{% else %}
+    <h2>Постов еще нет</h2>
+    {% endif %}
+{% endblock %}

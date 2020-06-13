@@ -1,0 +1,67 @@
+
+
+
+{% block body %}
+
+    <style>
+        body{
+            font-family: sans-serif;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+            div{
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                height: 50px;
+            }
+        input{
+            height: 30px;
+            border: 2px solid chartreuse;
+            outline-color: #00b3ff;
+        }
+        button{
+            text-decoration: none;
+            outline: none;
+            border: 3px solid chartreuse;
+            font-size: 15px;
+            padding: 5px;
+            transition: 0.5s;
+            color: #00b3ff;
+            background-color: white;
+        }
+
+        button:hover{
+            border: 3px solid #00b3ff;
+            color: chartreuse;
+        }
+    </style>
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+
+
+    {{ form_start(registrationForm) }}
+    <h1>Регистрация</h1>
+        {{ form_row(registrationForm.email, {
+            label : 'Email'
+        }) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Пароль'
+        }) }}
+        {{ form_row(registrationForm.agreeTerms , {
+            label : 'Согласие с условиями'
+        }) }}
+        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}

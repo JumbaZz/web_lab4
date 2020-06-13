@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post{% endblock %}
+
+{% block body %}
+    <style>
+        form[name='comments']{
+         display: flex;
+            align-items: center;
+            flex-direction: column;
+            position: absolute;
+            left: 20px;
+        }
+
+        textarea{
+            resize: none;
+            height: 100px;
+            margin-top: 10px;
+            border: 2px solid chartreuse;
+            font-size: 20px;
+            outline-color: #00b3ff;
+            font-family: sans-serif;
+            margin-bottom: 10px;
+        }
+        .post_div{
+        }
+        body{
+            font-family: sans-serif;
+        }
+        p{
+            font-size: 20px;
+        }
+        button{
+            text-decoration: none;
+            outline: none;
+            border: 3px solid chartreuse;
+            font-size: 15px;
+            padding: 5px;
+
+            transition: 0.5s;
+            color: #00b3ff;
+            background-color: white;
+        }
+
+        button:hover{
+            border: 3px solid #00b3ff;
+            color: chartreuse;
+        }
+
+        .comments_div{
+            position: relative;
+            top: 200px;
+        }
+        .in_comments_div{
+            border: 3px solid chartreuse;
+            font-size: 15px;
+            padding: 5px;
+            width: 500px;
+            margin: 10px;
+        }
+        p{
+            color: #00b3ff;
+        }
+    </style>
+    <h1>{{ post.Title }}</h1>
+    <div class="post_div">
+                <p>{{ post.Date ? post.Date|date('d.m.Y,H:i') : '' }}</p>
+                <p>Количество просмотров {{ post.NumOfViews }}</p>
+        <p>{{ post.Description }}</p>
+    </div>
+    <div class="comment_div">
+        {{ form_start(formC) }}
+        {{ form_widget(formC.Text, { 'attr': {'rows' : '4','cols' : '50'}} ) }}
+        <button class="btn btn-primary">{{ button_label|default('Добавить комментарий') }}</button>
+        {{ form_end(formC) }}
+    </div>
+    <div class="comments_div">
+        {% for comment in comments %}
+            <div class="in_comments_div">
+                <p>{{ comment.UserNew }}</p>
+                <p>{{ comment.Text }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

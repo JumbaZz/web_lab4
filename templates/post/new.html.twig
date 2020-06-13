@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Post{% endblock %}
+
+{% block body %}
+    <style>
+        form{
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        textarea{
+            resize: none;
+            height: 100px;
+            margin-top: 10px;
+            border: 2px solid chartreuse;
+            font-size: 20px;
+            outline-color: #00b3ff;
+            font-family: sans-serif;
+        }
+        label{
+            margin-top: 10px;
+            font-size: 20px;
+        }
+        input[type='text']{
+            height: 30px;
+            font-size: 20px;
+            margin-top: 10px;
+            border: 2px solid chartreuse;
+            outline-color: #00b3ff;
+        }
+        button{
+            text-decoration: none;
+            outline: none;
+            border: 3px solid chartreuse;
+            font-size: 25px;
+            padding: 5px;
+            position: relative;
+            top: 30px;
+            transition: 0.5s;
+            color: #00b3ff;
+            background-color: white;
+        }
+
+        button:hover{
+            border: 3px solid #00b3ff;
+            color: chartreuse;
+        }
+
+    </style>
+
+
+    {{ form_start(form) }}
+    {{ form_label(form.Title, 'Заголовок') }}
+    {{ form_widget(form.Title, {'attr': {'class': 'Title'}}) }}
+    {{ form_label(form.Description, 'Текст') }}
+    {{ form_widget(form.Description,{'attr': {'class': 'Description'}})}}
+    <button class="btn btn-success">{{ button_label|default('Создать') }}</button>
+    {{ form_end(form) }}
+
+{% endblock %}

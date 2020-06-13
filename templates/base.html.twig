@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<style>
+    body{
+        font-family: sans-serif;
+    }
+    #sidebar{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 20px;
+        font-weight: 600;
+        font-size: 25px;
+        background-color: #00b3ff;
+        align-items: center;
+    }
+
+    .aboutLink,.username,.adminLink,.main,.logout,.login,.register{
+        text-decoration: none;
+        color: white;
+        transition: 0.5s;
+    }
+    .aboutLink:hover,.adminLink:hover,.main:hover,.login:hover,.register:hover{
+        color: chartreuse;
+        text-shadow: 0 0 1em chartreuse;
+        margin-top: 10px;
+    }
+    .logout:hover{
+        text-shadow: 0 0 1em red;
+        color: red;
+    }
+</style>
+<div id="sidebar">
+    {% block sidebar %}
+                <a href="/about" class="aboutLink">О сайте</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="/admin" class="adminLink">Admin</a></li>
+                {% endif %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <p class="username">{{ app.user.username }}</p>
+                    <a href="/post" class="main">Главная</a>
+                    <a href="/logout" class="logout">Выход</a>
+                {% else %}
+                    <a href="/login" class="login">Войти</a>
+                    <a href="/register" class="register">Регистрация</a>
+                {% endif %}
+
+    {% endblock %}
+</div>
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>
